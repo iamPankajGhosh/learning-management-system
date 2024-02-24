@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const menuItems = [
   {
@@ -18,6 +19,8 @@ const menuItems = [
 ];
 
 export default function Header() {
+  const navigate = useNavigate();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -62,12 +65,14 @@ export default function Header() {
           <button
             type="button"
             className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            onClick={() => navigate("/signup")}
           >
-            Sign In
+            Sign Up
           </button>
           <button
             type="button"
             className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            onClick={() => navigate("/login")}
           >
             Log In
           </button>
