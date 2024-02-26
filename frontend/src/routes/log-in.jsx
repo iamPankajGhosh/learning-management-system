@@ -1,7 +1,27 @@
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function LogIn() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    navigate("/courses");
+  };
+
   return (
     <section>
       <div className="flex items-center justify-center px-4">
@@ -19,7 +39,7 @@ export default function LogIn() {
               Create a free account
             </Link>
           </p>
-          <form action="#" method="POST" className="mt-8">
+          <form onSubmit={handleSubmit} className="mt-8">
             <div className="space-y-5">
               <div>
                 <label
@@ -34,6 +54,9 @@ export default function LogIn() {
                     className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="email"
                     placeholder="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                   ></input>
                 </div>
               </div>
@@ -46,20 +69,23 @@ export default function LogIn() {
                     {" "}
                     Password{" "}
                   </label>
-                  <a
-                    href="#"
+                  <NavLink
+                    to="/signup"
                     title=""
                     className="text-sm font-semibold text-black hover:underline"
                   >
                     {" "}
                     Forgot password?{" "}
-                  </a>
+                  </NavLink>
                 </div>
                 <div className="mt-2">
                   <input
                     className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="password"
                     placeholder="Password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                   ></input>
                 </div>
               </div>

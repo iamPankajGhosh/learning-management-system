@@ -46,12 +46,7 @@ export default function SignUp() {
               Log In
             </Link>
           </p>
-          <form
-            action="#"
-            method="POST"
-            className="mt-8"
-            onSubmit={handleSubmit}
-          >
+          <form className="mt-8" onSubmit={handleSubmit}>
             <div className="space-y-5">
               <div>
                 <label
