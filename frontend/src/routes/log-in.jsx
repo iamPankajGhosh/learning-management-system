@@ -20,7 +20,16 @@ export default function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios.post("http://localhost:3000/api/user", formData);
+    await axios
+      .post("http://localhost:3000/api/user/auth", formData)
+      .then((res) => {
+        if (res.data === "success") {
+          const token = Math.random().toString(36).substring(2);
+          localStorage.setItem("token", token);
+          navigate("/");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

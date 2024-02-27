@@ -4,7 +4,7 @@ const Profile = () => {
       <div className="mx-auto max-w-5xl px-5">
         <div className="mx-auto flex flex-wrap items-center lg:w-4/5">
           <img
-            alt="Nike Air Max 21A"
+            alt="avatars"
             className="h-64 w-full rounded object-cover lg:h-96 lg:w-1/2"
             src="https://avatars.githubusercontent.com/u/140588883?v=4"
           />

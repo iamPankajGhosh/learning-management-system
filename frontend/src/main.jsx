@@ -18,14 +18,18 @@ import "./index.css";
 import SignUp from "./routes/sign-up";
 import LogIn from "./routes/log-in";
 
+const token = localStorage.getItem("token");
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
       <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} />
-        <Route path="courses" element={<Courses />} />
-        <Route path="courses/course/:courseId" element={<CourseDetails />} />
-        <Route path="profile" element={<Profile />} />
+        {token && <Route path="courses" element={<Courses />} />}
+        {token && (
+          <Route path="courses/course/:courseId" element={<CourseDetails />} />
+        )}
+        {token && <Route path="profile" element={<Profile />} />}
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<LogIn />} />
       </Route>

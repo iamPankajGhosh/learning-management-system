@@ -3,28 +3,34 @@ import { Menu, X, ChevronRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const menuItems = [
-  {
-    name: "Home",
-    slug: "/",
-  },
-  {
-    name: "Courses",
-    slug: "/courses",
-  },
-  {
-    name: "Profile",
-    slug: "/profile",
-  },
-];
-
 export default function Header() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const menuItems = [
+    {
+      name: "Home",
+      slug: "/",
+    },
+    {
+      name: "Courses",
+      slug: token ? "/courses" : "/login",
+    },
+    {
+      name: "Profile",
+      slug: token ? "/profile" : "/login",
+    },
+  ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
@@ -62,20 +68,35 @@ export default function Header() {
           </ul>
         </div>
         <div className="hidden space-x-2 lg:block">
-          <button
-            type="button"
-            className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            onClick={() => navigate("/signup")}
-          >
-            Sign Up
-          </button>
-          <button
-            type="button"
-            className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            onClick={() => navigate("/login")}
-          >
-            Log In
-          </button>
+          {token && (
+            <button
+              type="button"
+              className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              onClick={handleLogout}
+            >
+              Log Out
+            </button>
+          )}
+
+          {!token && (
+            <button
+              type="button"
+              className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </button>
+          )}
+
+          {!token && (
+            <button
+              type="button"
+              className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              onClick={() => navigate("/login")}
+            >
+              Log In
+            </button>
+          )}
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
@@ -10,6 +10,8 @@ export default function SignUp() {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,7 +22,13 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post("http://localhost:3000/api/user", formData);
+    await axios
+      .post("http://localhost:3000/api/user", formData)
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
