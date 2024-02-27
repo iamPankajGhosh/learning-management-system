@@ -1,22 +1,38 @@
 import express from "express";
 import mongoose from "mongoose";
-import config from "./config";
-import authRoutes from "./routes/authRoutes";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
+app.use(bodyParser.json());
+app.use(cors());
+
+// db connect
 
 mongoose
-  .connect(config.mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-app.use(express.json());
+// user model
 
-app.use("/api/auth", authRoutes);
+const userSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  password: String,
+});
+
+const User = mongoose.model("User", userSchema);
+
+// api routes
+
+app.post("/api/user", (req, res) => {
+  User.create(req.body)
+    .then((user) => res.json(user))
+    .catch((err) => console.log(err));
+});
 
 // start server
 

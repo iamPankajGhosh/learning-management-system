@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -16,10 +17,10 @@ export default function LogIn() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    navigate("/courses");
+    axios.post("http://localhost:3000/api/user", formData);
   };
 
   return (
@@ -91,7 +92,7 @@ export default function LogIn() {
               </div>
               <div>
                 <button
-                  type="button"
+                  type="submit"
                   className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                 >
                   Get started <ArrowRight className="ml-2" size={16} />
